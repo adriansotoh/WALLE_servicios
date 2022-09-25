@@ -9,13 +9,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
-@Table(name = "estado")
+@Data
+@Table(name = "trabajador")
 public class Trabajador {
 	
 	@Id
@@ -24,6 +26,7 @@ public class Trabajador {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_rol")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Rol rol;
 	
 	private String documento;
