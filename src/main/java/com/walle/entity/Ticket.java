@@ -20,7 +20,8 @@ import lombok.Setter;
 public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_ticket;
+	@JoinColumn(name = "id_ticket")
+	private int idTicket;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_trabajador")

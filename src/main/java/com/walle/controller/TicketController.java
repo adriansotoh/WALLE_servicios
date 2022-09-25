@@ -20,12 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.walle.dto.TicketDTO;
 import com.walle.entity.Ticket;
 import com.walle.service.TicketService;
 
 
 @RestController
-@RequestMapping("/url/ticket")
+@RequestMapping("/tickets")
 public class TicketController {
 
 	@Autowired
@@ -34,7 +35,7 @@ public class TicketController {
 	
 	@PostMapping
 	@ResponseBody
-	public ResponseEntity<?> inserta(@Valid @RequestBody Ticket obj, Errors errors){
+	public ResponseEntity<?> inserta(@Valid @RequestBody TicketDTO obj, Errors errors){
 		
 		HashMap<String, Object> salida = new HashMap<>();
 		List<String> lstMensajes = new ArrayList<String>();
@@ -54,7 +55,7 @@ public class TicketController {
 		if (objSalida == null) {
 			lstMensajes.add("Error en el registro");
 		}else {
-			lstMensajes.add("Se registró el ticket con el ID ==> " + objSalida.getId_ticket());
+			lstMensajes.add("Se registró el ticket con el ID ==> " + objSalida.getIdTicket());
 		}
 		return ResponseEntity.ok(salida);
 	}
