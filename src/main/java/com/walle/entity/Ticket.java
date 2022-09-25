@@ -40,7 +40,7 @@ public class Ticket {
 	@JoinColumn(name = "id_urgencia")
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Urgencia urgencia;
-	
+	 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_dificultad")
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
