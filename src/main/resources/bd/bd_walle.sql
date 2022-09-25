@@ -64,3 +64,5 @@ constraint fk_estado_ticket foreign key (id_estado) references estado(id_estado)
 constraint fk_urgencia_ticket foreign key (id_urgencia) references urgencia(id_urgencia),
 constraint fk_dificultad_ticket foreign key (id_dificultad) references dificultad(id_dificultad)
 );
+
+SELECT * FROM ticket

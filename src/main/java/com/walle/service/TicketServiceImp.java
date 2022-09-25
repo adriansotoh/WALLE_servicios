@@ -20,5 +20,9 @@ public class TicketServiceImp implements TicketService{
 		return repository.save(obj);
 	}
 	
-	
+	@Override
+	public List<Ticket> listaTicket() {
+		return repository.findAll();
+	}
+
 }
