@@ -9,5 +9,6 @@ public interface TicketService {
 
 	public abstract Ticket insertaTicket(TicketDTO obj);	
 	public abstract List<Ticket> listaTicket();
+	public abstract List<Ticket> listaTicket(int idEstado);
 
 }

@@ -73,4 +73,9 @@ public class TicketServiceImp implements TicketService{
 		return repository.findAll();
 	}
 
+	@Override
+	public List<Ticket> listaTicket(int idEstado) {
+		return repository.listaTicket(idEstado);
+	}
+
 }
