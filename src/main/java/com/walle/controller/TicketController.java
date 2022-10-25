@@ -15,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,10 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.walle.dto.TicketDTO;
 import com.walle.entity.Ticket;
 import com.walle.service.TicketService;
+import com.walle.utils.AppSettings;
 
 
 @RestController
 @RequestMapping("/tickets")
+@CrossOrigin(origins = AppSettings.URL_CROSS_ORIGIN)
 public class TicketController {
 
 	@Autowired
