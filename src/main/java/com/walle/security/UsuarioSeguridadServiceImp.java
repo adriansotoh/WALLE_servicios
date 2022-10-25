@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.walle.entity.Opcion;
 import com.walle.entity.Rol;
 import com.walle.entity.Usuario;
 import com.walle.security.UsuarioPrincipal;
@@ -34,8 +35,11 @@ public class UsuarioSeguridadServiceImp implements UserDetailsService {
 
 				List<Rol> lstRol = usuarioRepository.traerRolesDeUsuario(objUsuario.getId());
 				log.info("========|||=========== " + lstRol);
+				
+				List<Opcion> lstOpciones = usuarioRepository.traerEnlacesDeUsuario(objUsuario.getId());
+				log.info("========|||=========== " + lstOpciones);
 
-				userDetails = UsuarioPrincipal.build(objUsuario, lstRol);
+				userDetails = UsuarioPrincipal.build(objUsuario, lstRol, lstOpciones);
 			}
 		} catch (IndexOutOfBoundsException e) {
 			throw new UsernameNotFoundException("Wrong username");

@@ -47,7 +47,7 @@ public class AuthController {
         UsuarioPrincipal usuario = (UsuarioPrincipal)authentication.getPrincipal();
         log.info(">>> usuario >>> " + usuario.toString());
         
-        JwtDto jwtDto = new JwtDto(jwt,  usuario.getUsername(),usuario.getNombreCompleto(), usuario.getIdUsuario(), usuario.getAuthorities());
+        JwtDto jwtDto = new JwtDto(jwt,  usuario.getUsername(),usuario.getNombreCompleto(), usuario.getIdUsuario(), usuario.getAuthorities(), usuario.getOpciones());
         log.info(">>> jwtDto >>> " + jwtDto.toString());
         
         return new ResponseEntity<JwtDto>(jwtDto, HttpStatus.OK);
