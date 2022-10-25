@@ -25,6 +25,7 @@ import com.walle.utils.AppSettings;
 import com.walle.dto.TicketDTO;
 import com.walle.entity.Ticket;
 import com.walle.service.TicketService;
+import com.walle.utils.AppSettings;
 
 
 @RestController
@@ -38,7 +39,7 @@ public class TicketController {
 	
 	@PostMapping
 	@ResponseBody
-	public ResponseEntity<?> inserta(@Valid @RequestBody TicketDTO obj, Errors errors){
+	public ResponseEntity<?> inserta(@Valid @RequestBody Ticket obj, Errors errors){
 		
 		HashMap<String, Object> salida = new HashMap<>();
 		List<String> lstMensajes = new ArrayList<String>();
@@ -53,6 +54,8 @@ public class TicketController {
 		if (!CollectionUtils.isEmpty(lstMensajes)) {
 			return ResponseEntity.ok(salida);
 		}
+		
+		obj.setEstrellas(1);
 
 		Ticket objSalida = ticketService.insertaTicket(obj);
 		if (objSalida == null) {
