@@ -55,6 +55,7 @@ public class TicketController {
 		}
 		
 		obj.setEstrellas(1);
+		obj.setOpinion("");
 
 		Ticket objSalida = ticketService.insertaTicket(obj);
 		if (objSalida == null) {
