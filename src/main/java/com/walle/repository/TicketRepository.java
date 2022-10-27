@@ -10,7 +10,7 @@ import com.walle.entity.Ticket;
 
 public interface TicketRepository extends JpaRepository<Ticket, Integer>{
 	
-	@Query("select e from Estado e where (?1 is -1 or e.estado.idEstado = ?1)")
+	@Query("select e from Estado e where (?1 is -1 or e.estado.id_Estado = ?1)")
 	public abstract List<Ticket> listaTicket(int idEstado);
 	
 }
