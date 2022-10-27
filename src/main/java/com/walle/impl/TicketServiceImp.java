@@ -35,37 +35,11 @@ public class TicketServiceImp implements TicketService{
 	private DificultadRepository dificultadRepo;
 
 	@Override
-	public Ticket insertaTicket(TicketDTO obj) {
-		Ticket salida = new Ticket();
+	public Ticket insertaTicket(Ticket obj) {
 		
-		salida.setIdTicket(obj.getIdTicket());
-		salida.setTitulo(obj.getTitulo());
-		salida.setEquipo(obj.getEquipo());
-		salida.setEstrellas(0);
-		salida.setOpinion("--");
-		salida.setDescripcion(obj.getDescripcion());
 		
-		Optional<Trabajador> oTrab = trabajadorRepo.findById(obj.getIdTrabajador());
-		if (oTrab.isPresent()) {
-			salida.setTrabajador(oTrab.get());
-		}
 		
-		Optional<Estado> oEst = estadoRepo.findById(obj.getIdEstado());
-		if (oEst.isPresent()) {
-			salida.setEstado(oEst.get());
-		}
-		
-		Optional<Urgencia> oUrg = urgenciaRepo.findById(obj.getIdUrgencia());
-		if (oUrg.isPresent()) {
-			salida.setUrgencia(oUrg.get());
-		}
-		
-		Optional<Dificultad> oDif = dificultadRepo.findById(obj.getIdDificultad());
-		if (oUrg.isPresent()) {
-			salida.setDificultad(oDif.get());
-		}
-		
-		return salida;
+		return repository.save(obj);
 	}
 	
 	@Override
@@ -74,8 +48,23 @@ public class TicketServiceImp implements TicketService{
 	}
 
 	@Override
-	public List<Ticket> listaTicket(int idEstado) {
-		return repository.listaTicket(idEstado);
+	public List<Ticket> listaDeTicketPorNombres(String nombres) {
+		return repository.findAllByTrabajadorNombres(nombres);
+	}
+	@Override
+	public Ticket actualizarTicket(Ticket ticket) {
+		return repository.save(ticket);
+	}
+
+	@Override
+	public List<Ticket> listaDeTicketPorEstado(int estado) {
+		return repository.findAllByEstadoIdEstado(estado);
+	}
+
+	@Override
+	public Optional<Ticket> listaDeTicketPorId(int id) {
+		return repository.findById(id);
+
 	}
 
 }

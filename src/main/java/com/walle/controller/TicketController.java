@@ -5,6 +5,7 @@ package com.walle.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+
+import com.walle.utils.AppSettings;
 import com.walle.dto.TicketDTO;
 import com.walle.entity.Ticket;
 import com.walle.service.TicketService;
@@ -39,7 +44,7 @@ public class TicketController {
 	
 	@PostMapping
 	@ResponseBody
-	public ResponseEntity<?> inserta(@Valid @RequestBody TicketDTO obj, Errors errors){
+	public ResponseEntity<?> inserta(@Valid @RequestBody Ticket obj, Errors errors){
 		
 		HashMap<String, Object> salida = new HashMap<>();
 		List<String> lstMensajes = new ArrayList<String>();
@@ -54,6 +59,9 @@ public class TicketController {
 		if (!CollectionUtils.isEmpty(lstMensajes)) {
 			return ResponseEntity.ok(salida);
 		}
+		
+		obj.setEstrellas(1);
+		obj.setOpinion("");
 
 		Ticket objSalida = ticketService.insertaTicket(obj);
 		if (objSalida == null) {
@@ -63,8 +71,7 @@ public class TicketController {
 		}
 		return ResponseEntity.ok(salida);
 	}
-	
-	
+
 	@GetMapping
 	@ResponseBody
 	public  ResponseEntity<List<Ticket>> listaTicket() {
@@ -72,15 +79,41 @@ public class TicketController {
 		return ResponseEntity.ok(lista);
 	}
 	
-	@GetMapping("/porFiltro")
-	@ResponseBody
-	public ResponseEntity<List<Ticket>> listaTicketPorFiltro(
-				@RequestParam(name = "idEstado" , required = false, defaultValue = "-1" ) int idEstado) {
-		
-		List<Ticket> lista = ticketService.listaTicket(idEstado);	
-		
+	
 
+	@GetMapping("porNombres/{nombres}")
+	@ResponseBody
+	public ResponseEntity<List<Ticket>> lista(@PathVariable String nombres){
+		List<Ticket> lista = ticketService.listaDeTicketPorNombres(nombres);
 		return ResponseEntity.ok(lista);
+	}
+
+	@GetMapping("porEstado/{estado}")
+	@ResponseBody
+	public ResponseEntity<List<Ticket>> listaPorEstado(@PathVariable int estado){
+		List<Ticket> lista = ticketService.listaDeTicketPorEstado(estado);
+		return ResponseEntity.ok(lista);
+	}
+
+	@PutMapping
+	@ResponseBody
+	public ResponseEntity<?> actualizarTicket(@RequestBody Ticket ticket){
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(ticket.getIdTicket());
+
+		if(idTicket.isPresent()) {
+			Ticket tckt = ticketService.actualizarTicket(ticket);
+			if(tckt == null) {
+				result.put("mensaje", "Error al actualizar");
+			}
+			else {
+				result.put("mensaje", "Se actualizó el ticket " + tckt.getIdTicket() + " correctamente");
+			}
+		} else {
+			result.put("mensaje", "No existe el ticket " + ticket.getIdTicket());
+		}
+
+		return ResponseEntity.ok(result);
 	}
 
 }
