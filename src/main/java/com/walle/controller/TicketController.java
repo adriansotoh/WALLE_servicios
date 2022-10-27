@@ -66,8 +66,7 @@ public class TicketController {
 		}
 		return ResponseEntity.ok(salida);
 	}
-	
-	
+
 	@GetMapping
 	@ResponseBody
 	public  ResponseEntity<List<Ticket>> listaTicket() {
