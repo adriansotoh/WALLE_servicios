@@ -1,7 +1,6 @@
 package com.walle.controller;
 
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +16,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import com.walle.utils.AppSettings;
-import com.walle.dto.TicketDTO;
 import com.walle.entity.Ticket;
 import com.walle.service.TicketService;
-import com.walle.utils.AppSettings;
 
 
 @RestController
@@ -71,7 +68,7 @@ public class TicketController {
 
 	@GetMapping("porNombres/{nombres}")
 	@ResponseBody
-	public ResponseEntity<List<Ticket>> lista(@PathVariable String nombres){
+	public ResponseEntity<List<Ticket>> listaPorNombre(@PathVariable String nombres){
 		List<Ticket> lista = ticketService.listaDeTicketPorNombres(nombres);
 		return ResponseEntity.ok(lista);
 	}
@@ -100,7 +97,28 @@ public class TicketController {
 		} else {
 			result.put("mensaje", "No existe el ticket " + ticket.getIdTicket());
 		}
-
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@PutMapping("actualizarEstado")
+	@ResponseBody
+	public ResponseEntity<?> actualizarTicketPorEstado(@PathVariable int id_estado, @PathVariable int id_ticket){
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(id_ticket);
+		
+		if(idTicket.isPresent()) {
+			Ticket tckt = ticketService.actualizarTicketPorEstado(id_estado, id_ticket);
+			if(tckt == null) {
+				result.put("mensaje", "Error al actualizar");
+			}
+			else {
+				result.put("mensaje", "Se actualizó el estado de ticket " + tckt.getIdTicket() + " correctamente");
+			}
+		} else {
+			result.put("mensaje", "No existe el ticket " + id_ticket);
+		}
+		
 		return ResponseEntity.ok(result);
 	}
 

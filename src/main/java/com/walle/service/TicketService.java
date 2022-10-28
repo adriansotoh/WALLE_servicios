@@ -14,5 +14,6 @@ public interface TicketService {
 	public List<Ticket> listaDeTicketPorEstado(int estado);
 	public Optional<Ticket> listaDeTicketPorId(int id);
 	public Ticket actualizarTicket(Ticket ticket);
+	public Ticket actualizarTicketPorEstado(int estado, int id);
 
 }

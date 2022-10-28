@@ -10,7 +10,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Data
+
+@Getter
+@Setter
 @Entity
 @Table(name = "dificultad")
 public class Dificultad {
@@ -19,7 +21,6 @@ public class Dificultad {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_dificultad;
 	private String descripcion;
-	
-	
 
 }
+
