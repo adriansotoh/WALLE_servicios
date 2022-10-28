@@ -26,4 +26,9 @@ public class TrabajadorServiceImp implements TrabajadorService {
 		return repo.findById(id);
 	}
 
+	@Override
+	public List<Trabajador> listarPorRol(int id) {
+		return repo.listarPorIdRol(id);
+	}
+
 }
