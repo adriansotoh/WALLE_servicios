@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.walle.impl.TicketServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.walle.utils.AppSettings;
 import com.walle.entity.Ticket;
-import com.walle.service.TicketService;
+import com.walle.impl.TrabajadorServiceImp;
 
 
 @RestController
@@ -26,7 +27,7 @@ import com.walle.service.TicketService;
 public class TicketController {
 
 	@Autowired
-	private TicketService ticketService;
+	private TicketServiceImp ticketService;
 	
 	
 	@PostMapping
