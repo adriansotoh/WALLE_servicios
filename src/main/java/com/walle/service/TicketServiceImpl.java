@@ -35,4 +35,9 @@ public class TicketServiceImpl implements TicketService {
 		return repo.findById(id);
 	}
 
+	@Override
+	public Ticket actualizarTicketPorEstado(int estado, int id) {
+		return repo.actualizarPorEstado(estado, id);
+	}
+
 }
