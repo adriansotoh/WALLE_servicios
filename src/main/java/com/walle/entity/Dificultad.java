@@ -6,8 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -19,7 +21,6 @@ public class Dificultad {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_dificultad;
 	private String descripcion;
-	
-	
 
 }
+

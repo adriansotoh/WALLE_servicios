@@ -1,27 +1,40 @@
 package com.walle.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Getter
-@Setter
+import lombok.Data;
+
 @Entity
+@Data
 @Table(name = "trabajador")
 public class Trabajador {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_trabajador;
-	private int id_rol;
+
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_rol")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private Rol rol;
+
 	private String documento;
 	private String nombres;
 	private String apellidos;
 	private String correo;
 
+	private String descripcion;
+	private String usuario;
+
 }
+
