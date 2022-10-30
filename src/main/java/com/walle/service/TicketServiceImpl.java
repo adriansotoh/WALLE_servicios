@@ -29,6 +29,11 @@ public class TicketServiceImpl implements TicketService {
 	public List<Ticket> listaDeTicketPorEstado(int estado) {
 		return repo.findAllByEstadoIdEstado(estado);
 	}
+	
+	@Override
+	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador) {
+		return repo.findAllByEstadoIdEstadoIdTrabajador(estado, trabajador);
+	}
 
 	@Override
 	public Optional<Ticket> listaDeTicketPorId(int id) {
