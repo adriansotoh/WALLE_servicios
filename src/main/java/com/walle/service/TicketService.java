@@ -12,6 +12,7 @@ public interface TicketService {
 	public abstract List<Ticket> listaTicket();
 	public List<Ticket> listaDeTicketPorNombres(String nombre);
 	public List<Ticket> listaDeTicketPorEstado(int estado);
+	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador);
 	public Optional<Ticket> listaDeTicketPorId(int id);
 	public Ticket actualizarTicket(Ticket ticket);
 	public Ticket actualizarTicketPorEstado(int estado, int id);
