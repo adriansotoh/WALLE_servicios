@@ -14,7 +14,17 @@ public class TicketServiceImpl implements TicketService {
 
 	@Autowired
 	private TicketRepository repo;
-	
+
+	@Override
+	public Ticket insertaTicket(Ticket obj) {
+		return null;
+	}
+
+	@Override
+	public List<Ticket> listaTicket() {
+		return null;
+	}
+
 	@Override
 	public List<Ticket> listaDeTicketPorNombres(String nombres) {
 		return repo.findAllByTrabajadorNombres(nombres);

@@ -68,6 +68,11 @@ public class TicketServiceImp implements TicketService{
 	}
 
 	@Override
+	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador) {
+		return null;
+	}
+
+	@Override
 	public Optional<Ticket> listaDeTicketPorId(int id) {
 		return repository.findById(id);
 	}
