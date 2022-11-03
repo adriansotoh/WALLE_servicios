@@ -72,4 +72,9 @@ public class TicketServiceImp implements TicketService{
 		return repository.findById(id);
 	}
 
+	@Override
+	public Ticket actualizarTicketPorTrabajador(int trabajador, int id) {
+		return repository.actualizarPorTrabajador(trabajador, id);
+	}
+
 }

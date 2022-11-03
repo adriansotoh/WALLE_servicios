@@ -123,5 +123,26 @@ public class TicketController {
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	@PutMapping("actualizarTrabajador")
+	@ResponseBody
+	public ResponseEntity<?> actualizarTicketPorTrabajador(@PathVariable int id_trabajador, @PathVariable int id_ticket){
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(id_ticket);
+		
+		if(idTicket.isPresent()) {
+			Ticket tckt = ticketService.actualizarTicketPorTrabajador(id_trabajador, id_ticket);
+			if(tckt == null) {
+				result.put("mensaje", "Error al actualizar al encargado");
+			}
+			else {
+				result.put("mensaje", "Se actualizó al encargado del ticket " + tckt.getIdTicket() + " correctamente");
+			}
+		} else {
+			result.put("mensaje", "No existe el ticket " + id_ticket);
+		}
+		
+		return ResponseEntity.ok(result);
+	}
 
 }
