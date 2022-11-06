@@ -57,7 +57,7 @@ public class TicketServiceImp implements TicketService{
 	}
 
 	@Override
-	public Ticket actualizarTicketPorEstado(int estado, int id) {
+	public int actualizarTicketPorEstado(int estado, int id) {
 		return repository.actualizarPorEstado(estado, id);
 	}
 
@@ -70,6 +70,12 @@ public class TicketServiceImp implements TicketService{
 	@Override
 	public Optional<Ticket> listaDeTicketPorId(int id) {
 		return repository.findById(id);
+	}
+
+	@Override
+	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

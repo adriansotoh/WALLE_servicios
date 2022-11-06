@@ -41,8 +41,20 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public Ticket actualizarTicketPorEstado(int estado, int id) {
+	public int actualizarTicketPorEstado(int estado, int id) {
 		return repo.actualizarPorEstado(estado, id);
+	}
+
+	@Override
+	public Ticket insertaTicket(Ticket obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> listaTicket() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
