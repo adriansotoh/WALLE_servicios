@@ -16,6 +16,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.walle.utils.AppSettings;
 import com.walle.entity.Ticket;
 import com.walle.impl.TrabajadorServiceImp;
@@ -123,5 +125,26 @@ public class TicketController {
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping("actualizarOpinionEstrella/{ticket}/{estrella}/{opinio}")
+	@ResponseBody
+	@Transactional
+	public ResponseEntity<?> actualizarticketOpinionEstrella(@PathVariable int ticket, @PathVariable int estrella, @PathVariable String opinio){
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(ticket);
+		
+		if(idTicket.isPresent()) {
+			ticketService.actualizarticketOpinionEstrella(ticket, estrella, opinio);
+	
+		
+				result.put("mensaje", "Se actualizó la estrella y opinion de ticket " + ticket + " correctamente");
+			
+		} else {
+			result.put("mensaje", "No existe el ticket " + ticket);
+		}
+		
+		return ResponseEntity.ok(result);
+	}
+
 
 }
