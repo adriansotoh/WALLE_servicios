@@ -11,6 +11,9 @@ import javax.validation.Valid;
 import com.walle.impl.TicketServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
@@ -30,6 +33,25 @@ public class TicketController {
 
 	@Autowired
 	private TicketServiceImp ticketService;
+	
+	@Autowired
+    private JavaMailSender mailSender;
+	
+	
+	@GetMapping("/enviaremail")
+	public void sendEmail() {
+
+            SimpleMailMessage email = new SimpleMailMessage();
+
+            //recorremos la lista y enviamos a cada cliente el mismo correo
+            email.setTo("christiangallegos2015@gmail.com");
+            email.setSubject("prueba06112022");
+            email.setText("pruebaaaaa");
+
+            mailSender.send(email);
+    
+    }
+
 	
 	
 	@PostMapping
