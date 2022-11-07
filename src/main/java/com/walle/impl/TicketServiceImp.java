@@ -72,4 +72,10 @@ public class TicketServiceImp implements TicketService{
 		return repository.findById(id);
 	}
 
+	@Override
+	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

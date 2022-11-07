@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.walle.utils.AppSettings;
 import com.walle.entity.Ticket;
-import com.walle.impl.TrabajadorServiceImp;
 
 
 @RestController
@@ -68,18 +67,26 @@ public class TicketController {
 		return ResponseEntity.ok(lista);
 	}
 
-	@GetMapping("porNombres/{nombres}")
+	@GetMapping("/listarPorNombres/{nombres}")
 	@ResponseBody
 	public ResponseEntity<List<Ticket>> listaPorNombre(@PathVariable String nombres){
 		List<Ticket> lista = ticketService.listaDeTicketPorNombres(nombres);
 		return ResponseEntity.ok(lista);
 	}
 
-	@GetMapping("porEstado/{estado}")
+	@GetMapping("/listarPorEstado/{estado}")
 	@ResponseBody
 	public ResponseEntity<List<Ticket>> listaPorEstado(@PathVariable int estado){
 		List<Ticket> lista = ticketService.listaDeTicketPorEstado(estado);
 		return ResponseEntity.ok(lista);
+	}
+
+	
+	@GetMapping("/buscarPorId/{id}")
+	@ResponseBody
+	public ResponseEntity<Optional<Ticket>> buscarPorId(@PathVariable int id){
+		Optional<Ticket> ticket = ticketService.listaDeTicketPorId(id);
+		return ResponseEntity.ok(ticket);
 	}
 
 	@PutMapping
@@ -103,7 +110,7 @@ public class TicketController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@PutMapping("actualizarEstado")
+	@PutMapping("/actualizarEstado")
 	@ResponseBody
 	public ResponseEntity<?> actualizarTicketPorEstado(@PathVariable int id_estado, @PathVariable int id_ticket){
 		HashMap<String, Object> result = new HashMap<String, Object>();
