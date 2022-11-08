@@ -14,7 +14,7 @@ public class TicketServiceImpl implements TicketService {
 
 	@Autowired
 	private TicketRepository repo;
-	
+
 	@Override
 	public List<Ticket> listaDeTicketPorNombres(String nombres) {
 		return repo.findAllByTrabajadorNombres(nombres);
@@ -56,7 +56,6 @@ public class TicketServiceImpl implements TicketService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	@Override
 	public void actualizarticketOpinionEstrella(int idTicket, int estrella, String opinion) {
 		// TODO Auto-generated method stub

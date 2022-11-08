@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.walle.dto.TicketDTO;
 import com.walle.entity.Dificultad;
 import com.walle.entity.Estado;
 import com.walle.entity.Ticket;
@@ -65,6 +64,11 @@ public class TicketServiceImp implements TicketService{
 	@Override
 	public List<Ticket> listaDeTicketPorEstado(int estado) {
 		return repository.findAllByEstadoIdEstado(estado);
+	}
+
+	@Override
+	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador) {
+		return null;
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package com.walle.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.walle.dto.TicketDTO;
 import com.walle.entity.Ticket;
 
 public interface TicketService {
