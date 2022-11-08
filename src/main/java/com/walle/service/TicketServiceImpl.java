@@ -56,5 +56,12 @@ public class TicketServiceImpl implements TicketService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public void actualizarticketOpinionEstrella(int idTicket, int estrella, String opinion) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 }

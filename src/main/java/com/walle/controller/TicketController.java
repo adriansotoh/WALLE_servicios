@@ -11,10 +11,15 @@ import javax.validation.Valid;
 import com.walle.impl.TicketServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import com.walle.utils.AppSettings;
 import com.walle.entity.Ticket;
@@ -27,6 +32,25 @@ public class TicketController {
 
 	@Autowired
 	private TicketServiceImp ticketService;
+	
+	@Autowired
+    private JavaMailSender mailSender;
+	
+	
+	@GetMapping("/enviaremail")
+	public void sendEmail() {
+
+            SimpleMailMessage email = new SimpleMailMessage();
+
+            //recorremos la lista y enviamos a cada cliente el mismo correo
+            email.setTo("christiangallegos2015@gmail.com");
+            email.setSubject("prueba06112022");
+            email.setText("prueba");
+         
+            mailSender.send(email);
+    
+    }
+
 	
 	
 	@PostMapping
@@ -130,5 +154,26 @@ public class TicketController {
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping("actualizarOpinionEstrella/{ticket}/{estrella}/{opinio}")
+	@ResponseBody
+	@Transactional
+	public ResponseEntity<?> actualizarticketOpinionEstrella(@PathVariable int ticket, @PathVariable int estrella, @PathVariable String opinio){
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(ticket);
+		
+		if(idTicket.isPresent()) {
+			ticketService.actualizarticketOpinionEstrella(ticket, estrella, opinio);
+	
+		
+				result.put("mensaje", "Se actualizó la estrella y opinion de ticket " + ticket + " correctamente");
+			
+		} else {
+			result.put("mensaje", "No existe el ticket " + ticket);
+		}
+		
+		return ResponseEntity.ok(result);
+	}
+
 
 }
