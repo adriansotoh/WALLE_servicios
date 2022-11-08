@@ -42,8 +42,10 @@ public class TicketServiceImp implements TicketService{
 	}
 	
 	@Override
-	public List<Ticket> listaTicket() {
+	public List<Ticket> lista() {
+		System.out.println("si lee--------------");
 		return repository.findAll();
+		
 	}
 
 	@Override
@@ -76,6 +78,19 @@ public class TicketServiceImp implements TicketService{
 		return repository.findById(id);
 	}
 
+	/*@Override
+	public Ticket actualizarTicketPorTrabajador(int trabajador, int id) {
+		System.out.println("si lee actualizaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		return repository.actualizarPorTrabajador(trabajador, id);
+	}*/
+
+	@Override
+	public void actualizarTicketPorTrabajador(int trabajador, int id) {
+		System.out.println("si lee actualizaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		//return repository.actualizarPorTrabajador(trabajador, id);
+		repository.actualizarPorTrabajador(trabajador, id);
+	}
+
 	@Override
 	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador) {
 		// TODO Auto-generated method stub
@@ -88,6 +103,5 @@ public class TicketServiceImp implements TicketService{
 		repository.actualizarticketOpinionEstrella(idTicket, estrella, opinion);
 		
 	}
-
 
 }
