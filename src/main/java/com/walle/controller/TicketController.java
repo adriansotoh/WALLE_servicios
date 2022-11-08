@@ -12,10 +12,15 @@ import javax.websocket.server.PathParam;
 import com.walle.impl.TicketServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import com.walle.utils.AppSettings;
 import com.walle.entity.Ticket;
@@ -30,6 +35,25 @@ public class TicketController {
 
 	@Autowired
 	private TicketService ticketService;
+	
+	@Autowired
+    private JavaMailSender mailSender;
+	
+	
+	@GetMapping("/enviaremail")
+	public void sendEmail() {
+
+            SimpleMailMessage email = new SimpleMailMessage();
+
+            //recorremos la lista y enviamos a cada cliente el mismo correo
+            email.setTo("christiangallegos2015@gmail.com");
+            email.setSubject("prueba06112022");
+            email.setText("prueba");
+         
+            mailSender.send(email);
+    
+    }
+
 	
 	
 	@PostMapping
@@ -69,18 +93,26 @@ public class TicketController {
 		return ticketService.lista();
 	}
 
-	@GetMapping("porNombres/{nombres}")
+	@GetMapping("/listarPorNombres/{nombres}")
 	@ResponseBody
 	public ResponseEntity<List<Ticket>> listaPorNombre(@PathVariable String nombres){
 		List<Ticket> lista = ticketService.listaDeTicketPorNombres(nombres);
 		return ResponseEntity.ok(lista);
 	}
 
-	@GetMapping("porEstado/{estado}")
+	@GetMapping("/listarPorEstado/{estado}")
 	@ResponseBody
 	public ResponseEntity<List<Ticket>> listaPorEstado(@PathVariable int estado){
 		List<Ticket> lista = ticketService.listaDeTicketPorEstado(estado);
 		return ResponseEntity.ok(lista);
+	}
+
+	
+	@GetMapping("/buscarPorId/{id}")
+	@ResponseBody
+	public ResponseEntity<Optional<Ticket>> buscarPorId(@PathVariable int id){
+		Optional<Ticket> ticket = ticketService.listaDeTicketPorId(id);
+		return ResponseEntity.ok(ticket);
 	}
 
 	@PutMapping
@@ -104,7 +136,7 @@ public class TicketController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@PutMapping("actualizarEstado")
+	@PutMapping("/actualizarEstado")
 	@ResponseBody
 	public ResponseEntity<?> actualizarTicketPorEstado(@PathVariable int id_estado, @PathVariable int id_ticket){
 		HashMap<String, Object> result = new HashMap<String, Object>();
@@ -159,6 +191,26 @@ public class TicketController {
 		}*/
 		System.out.println("si leeeeeeeeeeeeeeeee"+ id_trabajador);
 		System.out.println("si leeeeeeeeeeeeeeeee"+ id_ticket);
+		return ResponseEntity.ok(result);
+	}
+
+	@GetMapping("actualizarOpinionEstrella/{ticket}/{estrella}/{opinio}")
+	@ResponseBody
+	@Transactional
+	public ResponseEntity<?> actualizarticketOpinionEstrella(@PathVariable int ticket, @PathVariable int estrella, @PathVariable String opinio){
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(ticket);
+		
+		if(idTicket.isPresent()) {
+			ticketService.actualizarticketOpinionEstrella(ticket, estrella, opinio);
+	
+		
+				result.put("mensaje", "Se actualizó la estrella y opinion de ticket " + ticket + " correctamente");
+			
+		} else {
+			result.put("mensaje", "No existe el ticket " + ticket);
+		}
+		
 		return ResponseEntity.ok(result);
 	}
 

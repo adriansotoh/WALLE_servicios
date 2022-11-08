@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.walle.dto.TicketDTO;
 import com.walle.entity.Dificultad;
 import com.walle.entity.Estado;
 import com.walle.entity.Ticket;
@@ -70,6 +69,11 @@ public class TicketServiceImp implements TicketService{
 	}
 
 	@Override
+	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador) {
+		return null;
+	}
+
+	@Override
 	public Optional<Ticket> listaDeTicketPorId(int id) {
 		return repository.findById(id);
 	}
@@ -85,6 +89,19 @@ public class TicketServiceImp implements TicketService{
 		System.out.println("si lee actualizaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		//return repository.actualizarPorTrabajador(trabajador, id);
 		repository.actualizarPorTrabajador(trabajador, id);
+	}
+
+	@Override
+	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void actualizarticketOpinionEstrella(int idTicket, int estrella, String opinion) {
+		
+		repository.actualizarticketOpinionEstrella(idTicket, estrella, opinion);
+		
 	}
 
 }
