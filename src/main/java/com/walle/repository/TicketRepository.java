@@ -1,6 +1,8 @@
 package com.walle.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+
 import com.walle.entity.Ticket;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,8 +21,15 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
 			nativeQuery = true)
 	public Ticket actualizarPorEstado(int id_estado, int id_ticket);
 	
-	@Query(value = "update ticket set id_trabajador = ?1 where id_ticket = ?2",
+    @Modifying
+	@Query(value = "update ticket t set t.id_trabajador = ?1 where t.id_ticket = ?2",
 			nativeQuery = true)
-	public Ticket actualizarPorTrabajador(int id_trabajador, int id_ticket);
+	public void actualizarPorTrabajador(int id_trabajador, int id_ticket);
+    //public Ticket actualizarPorTrabajador(int id_trabajador, int id_ticket);
+	
+	
+	/*@Query(value = "select * from ticket",
+			nativeQuery = true)
+	public List<Ticket> findAllTicket();*/
 
 }

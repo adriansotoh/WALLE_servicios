@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import com.walle.impl.TicketServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import com.walle.utils.AppSettings;
 import com.walle.entity.Ticket;
 import com.walle.impl.TrabajadorServiceImp;
+import com.walle.service.TicketService;
 
 
 @RestController
@@ -27,7 +29,7 @@ import com.walle.impl.TrabajadorServiceImp;
 public class TicketController {
 
 	@Autowired
-	private TicketServiceImp ticketService;
+	private TicketService ticketService;
 	
 	
 	@PostMapping
@@ -61,11 +63,10 @@ public class TicketController {
 	}
 	
 	
-	@GetMapping("/listar")
+	@GetMapping("/listarTickets")
 	@ResponseBody
-	public  ResponseEntity<List<Ticket>> listaTicket() {
-		List<Ticket> lista = ticketService.listaTicket();
-		return ResponseEntity.ok(lista);
+	public  List<Ticket> listaTicket() {
+		return ticketService.lista();
 	}
 
 	@GetMapping("porNombres/{nombres}")
@@ -124,24 +125,40 @@ public class TicketController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@PutMapping("actualizarTrabajador")
+	@PutMapping("/actualizarTrabajador")
 	@ResponseBody
-	public ResponseEntity<?> actualizarTicketPorTrabajador(@PathVariable int id_trabajador, @PathVariable int id_ticket){
+	public ResponseEntity<?> actualizarTicketPorTrabajador(@PathParam("id_trabajador") int id_trabajador, @PathParam("id_ticket") int id_ticket){
 		HashMap<String, Object> result = new HashMap<String, Object>();
+		System.out.println("si lee :" + id_trabajador + "/" + id_ticket);
 		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(id_ticket);
 		
 		if(idTicket.isPresent()) {
-			Ticket tckt = ticketService.actualizarTicketPorTrabajador(id_trabajador, id_ticket);
+			 Integer tckt=1;
+			 ticketService.actualizarTicketPorTrabajador(id_trabajador, id_ticket);
 			if(tckt == null) {
 				result.put("mensaje", "Error al actualizar al encargado");
 			}
 			else {
-				result.put("mensaje", "Se actualizó al encargado del ticket " + tckt.getIdTicket() + " correctamente");
+				result.put("mensaje", "Se actualizó al encargado del ticket " + " correctamente");
 			}
 		} else {
 			result.put("mensaje", "No existe el ticket " + id_ticket);
 		}
 		
+		/*if(idTicket.isPresent()) {
+			 Integer tckt = 1;
+					 ticketService.actualizarTicketPorTrabajador(id_trabajador, id_ticket);
+			if(tckt == null) {
+				result.put("mensaje", "Error al actualizar al encargado");
+			}
+			else {
+				result.put("mensaje", "Se actualizó al encargado del ticket " + " correctamente");
+			}
+		} else {
+			result.put("mensaje", "No existe el ticket " + id_ticket);
+		}*/
+		System.out.println("si leeeeeeeeeeeeeeeee"+ id_trabajador);
+		System.out.println("si leeeeeeeeeeeeeeeee"+ id_ticket);
 		return ResponseEntity.ok(result);
 	}
 
