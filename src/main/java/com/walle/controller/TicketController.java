@@ -46,8 +46,8 @@ public class TicketController {
             //recorremos la lista y enviamos a cada cliente el mismo correo
             email.setTo("christiangallegos2015@gmail.com");
             email.setSubject("prueba06112022");
-            email.setText("pruebaaaaa");
-
+            email.setText("prueba");
+         
             mailSender.send(email);
     
     }
