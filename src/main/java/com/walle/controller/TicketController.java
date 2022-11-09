@@ -71,7 +71,7 @@ public class TicketController {
 		if (!CollectionUtils.isEmpty(lstMensajes)) {
 			return ResponseEntity.ok(salida);
 		}
-		
+		  
 		obj.setEstrellas(1);
 		obj.setOpinion("");
 		obj.setId_usuario(1);
