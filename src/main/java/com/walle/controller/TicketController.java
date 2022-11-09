@@ -74,6 +74,7 @@ public class TicketController {
 		
 		obj.setEstrellas(1);
 		obj.setOpinion("");
+		obj.setId_usuario(1);
 
 		Ticket objSalida = ticketService.insertaTicket(obj);
 		if (objSalida == null) {

@@ -54,6 +54,7 @@ public class Ticket {
 	private String equipo;			
 	private Integer estrellas; 	
 	private String opinion; 
+	private int id_usuario; 
 
 }
 

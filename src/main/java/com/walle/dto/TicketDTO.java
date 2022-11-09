@@ -21,4 +21,5 @@ public class TicketDTO {
 	private String equipo;
 	private int estrellas;
 	private String opinion;
+	private int id_usuario; 
 }
