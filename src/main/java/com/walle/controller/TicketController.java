@@ -8,17 +8,24 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import com.walle.impl.TicketServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.walle.utils.AppSettings;
 import com.walle.entity.Ticket;
-import com.walle.impl.TrabajadorServiceImp;
+import com.walle.impl.TicketServiceImp;
+import com.walle.utils.AppSettings;
 
 
 @RestController
@@ -116,6 +123,13 @@ public class TicketController {
 			}
 			else {
 				result.put("mensaje", "Se actualizó el estado de ticket " + id_ticket + " correctamente");
+				if(id_estado == 3 || id_estado ==  4) {
+					SimpleMailMessage email = new SimpleMailMessage();
+					email.setTo(idTicket.get().getTrabajador().getCorreo());
+					email.setSubject("Finalización o cancelación de Ticket");
+					email.setText("El ticket procesado ya está terminado o cancelado.");
+					mailSender.send(email);
+				}
 			}
 		} else {
 			result.put("mensaje", "No existe el ticket " + id_ticket);
