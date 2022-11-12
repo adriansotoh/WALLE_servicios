@@ -32,10 +32,10 @@ public class Ticket {
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Trabajador trabajador ;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private Trabajador usuario ;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "id_usuario")
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//	private Trabajador usuario ;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_estado")
@@ -59,6 +59,7 @@ public class Ticket {
 	private String equipo;			
 	private Integer estrellas; 	
 	private String opinion; 
+	private int id_usuario; 
 
 }
 

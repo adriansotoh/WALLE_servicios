@@ -1,6 +1,7 @@
 package com.walle.controller;
 
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,9 @@ import com.walle.entity.Ticket;
 import com.walle.impl.TrabajadorServiceImp;
 import com.walle.service.TicketService;
 
+import javax.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
 
 @RestController
 @RequestMapping("/tickets")
@@ -42,16 +46,22 @@ public class TicketController {
 	
 	@GetMapping("/enviaremail")
 	public void sendEmail() {
-
-            SimpleMailMessage email = new SimpleMailMessage();
-
-            //recorremos la lista y enviamos a cada cliente el mismo correo
-            email.setTo("christiangallegos2015@gmail.com");
-            email.setSubject("prueba06112022");
-            email.setText("prueba");
-         
-            mailSender.send(email);
-    
+	
+           try {
+        	   MimeMessage mimeMessage = mailSender.createMimeMessage();
+               MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+               String htmlMsg = "<a href='https://www.whatsapp.com/' ><img src='https://www.openmet.com/wp-content/uploads/2022/04/encuestas-pulso.png'/></a>";
+               mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
+               //helper.setText(htmlMsg, true); // Use this or above line.
+               helper.setTo("mery.andia.18@gmail.com");
+               helper.setSubject("CGDAAAA");
+               helper.setFrom("mery.andia.18@gmail.com");
+               mailSender.send(mimeMessage);
+           }catch(Exception ex) {
+        	   System.out.println(ex);
+           }
+            
+            
     }
 
 	
@@ -73,9 +83,10 @@ public class TicketController {
 		if (!CollectionUtils.isEmpty(lstMensajes)) {
 			return ResponseEntity.ok(salida);
 		}
-		
+		  
 		obj.setEstrellas(1);
 		obj.setOpinion("");
+		obj.setId_usuario(1);
 
 		Ticket objSalida = ticketService.insertaTicket(obj);
 		if (objSalida == null) {
