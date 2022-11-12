@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import com.walle.impl.TicketServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.walle.utils.AppSettings;
 import com.walle.entity.Ticket;
 import com.walle.impl.TrabajadorServiceImp;
+import com.walle.service.TicketService;
 
 import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -36,7 +38,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 public class TicketController {
 
 	@Autowired
-	private TicketServiceImp ticketService;
+	private TicketService ticketService;
 	
 	@Autowired
     private JavaMailSender mailSender;
@@ -96,25 +98,32 @@ public class TicketController {
 	}
 	
 	
-	@GetMapping("/listar")
+	@GetMapping("/listarTickets")
 	@ResponseBody
-	public  ResponseEntity<List<Ticket>> listaTicket() {
-		List<Ticket> lista = ticketService.listaTicket();
-		return ResponseEntity.ok(lista);
+	public  List<Ticket> listaTicket() {
+		return ticketService.lista();
 	}
 
-	@GetMapping("porNombres/{nombres}")
+	@GetMapping("/listarPorNombres/{nombres}")
 	@ResponseBody
 	public ResponseEntity<List<Ticket>> listaPorNombre(@PathVariable String nombres){
 		List<Ticket> lista = ticketService.listaDeTicketPorNombres(nombres);
 		return ResponseEntity.ok(lista);
 	}
 
-	@GetMapping("porEstado/{estado}")
+	@GetMapping("/listarPorEstado/{estado}")
 	@ResponseBody
 	public ResponseEntity<List<Ticket>> listaPorEstado(@PathVariable int estado){
 		List<Ticket> lista = ticketService.listaDeTicketPorEstado(estado);
 		return ResponseEntity.ok(lista);
+	}
+
+	
+	@GetMapping("/buscarPorId/{id}")
+	@ResponseBody
+	public ResponseEntity<Optional<Ticket>> buscarPorId(@PathVariable int id){
+		Optional<Ticket> ticket = ticketService.listaDeTicketPorId(id);
+		return ResponseEntity.ok(ticket);
 	}
 
 	@PutMapping
@@ -138,7 +147,7 @@ public class TicketController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@PutMapping("actualizarEstado")
+	@PutMapping("/actualizarEstado")
 	@ResponseBody
 	public ResponseEntity<?> actualizarTicketPorEstado(@PathVariable int id_estado, @PathVariable int id_ticket){
 		HashMap<String, Object> result = new HashMap<String, Object>();
@@ -159,6 +168,43 @@ public class TicketController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@PutMapping("/actualizarTrabajador")
+	@ResponseBody
+	public ResponseEntity<?> actualizarTicketPorTrabajador(@PathParam("id_trabajador") int id_trabajador, @PathParam("id_ticket") int id_ticket){
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		System.out.println("si lee :" + id_trabajador + "/" + id_ticket);
+		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(id_ticket);
+		
+		if(idTicket.isPresent()) {
+			 Integer tckt=1;
+			 ticketService.actualizarTicketPorTrabajador(id_trabajador, id_ticket);
+			if(tckt == null) {
+				result.put("mensaje", "Error al actualizar al encargado");
+			}
+			else {
+				result.put("mensaje", "Se actualizó al encargado del ticket " + " correctamente");
+			}
+		} else {
+			result.put("mensaje", "No existe el ticket " + id_ticket);
+		}
+		
+		/*if(idTicket.isPresent()) {
+			 Integer tckt = 1;
+					 ticketService.actualizarTicketPorTrabajador(id_trabajador, id_ticket);
+			if(tckt == null) {
+				result.put("mensaje", "Error al actualizar al encargado");
+			}
+			else {
+				result.put("mensaje", "Se actualizó al encargado del ticket " + " correctamente");
+			}
+		} else {
+			result.put("mensaje", "No existe el ticket " + id_ticket);
+		}*/
+		System.out.println("si leeeeeeeeeeeeeeeee"+ id_trabajador);
+		System.out.println("si leeeeeeeeeeeeeeeee"+ id_ticket);
+		return ResponseEntity.ok(result);
+	}
+
 	@GetMapping("actualizarOpinionEstrella/{ticket}/{estrella}/{opinio}")
 	@ResponseBody
 	@Transactional
@@ -178,6 +224,5 @@ public class TicketController {
 		
 		return ResponseEntity.ok(result);
 	}
-
 
 }
