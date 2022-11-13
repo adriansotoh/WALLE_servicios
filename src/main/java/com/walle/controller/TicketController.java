@@ -10,6 +10,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
@@ -36,6 +38,8 @@ public class TicketController {
 	@Autowired
 	private TicketServiceImp ticketService;
 	
+	@Autowired
+	private MailSender mailSender;
 	
 	@PostMapping
 	@ResponseBody
