@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.walle.entity.Estado;
 import com.walle.entity.Ticket;
+import com.walle.impl.EstadoServiceImp;
 import com.walle.impl.TicketServiceImp;
 import com.walle.utils.AppSettings;
 
@@ -37,8 +39,9 @@ public class TicketController {
 
 	@Autowired
 	private TicketServiceImp ticketService;
-	
 	@Autowired
+	private EstadoServiceImp estadoService;
+	
 	private MailSender mailSender;
 	
 	@PostMapping
@@ -119,8 +122,9 @@ public class TicketController {
 	public ResponseEntity<?> actualizarTicketPorEstado(@PathVariable int id_estado, @PathVariable int id_ticket){
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(id_ticket);
+		Optional<Estado> idEstado = estadoService.buscarId(id_estado);
 		
-		if(idTicket.isPresent()) {
+		if(idTicket.isPresent() && idEstado.isPresent()) {
 			int tckt = ticketService.actualizarTicketPorEstado(id_estado, id_ticket);
 			if(tckt == -1) {
 				result.put("mensaje", "Error al actualizar");
@@ -136,7 +140,12 @@ public class TicketController {
 				}
 			}
 		} else {
-			result.put("mensaje", "No existe el ticket " + id_ticket);
+			if(idTicket.isEmpty()) {
+				result.put("mensaje", "No existe el ticket " + id_ticket);
+			}
+			else if(idEstado.isEmpty()) {
+				result.put("mensaje", "No existe el estado " + id_estado);
+			}
 		}
 		
 		return ResponseEntity.ok(result);
