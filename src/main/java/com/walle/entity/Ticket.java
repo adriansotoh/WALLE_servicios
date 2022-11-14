@@ -23,12 +23,18 @@ import lombok.Setter;
 public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
+	
 	@Column(name = "id_ticket")
 	private int idTicket;
 	
+	@Column(name = "id_usuario")
+	private int idUsuario;
+	
+	@Column(name = "id_trabajador")
+	private int idTrabajador;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_trabajador")
+	@JoinColumn(name = "id_trabajador",insertable = false, updatable = false)
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Trabajador trabajador ;
 	
@@ -59,7 +65,6 @@ public class Ticket {
 	private String equipo;			
 	private Integer estrellas; 	
 	private String opinion; 
-	private int id_usuario; 
 
 }
 

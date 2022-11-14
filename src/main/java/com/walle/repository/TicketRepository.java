@@ -23,9 +23,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
 	public Ticket actualizarPorEstado(int id_estado, int id_ticket);
 	
     @Modifying
-	@Query(value = "update ticket t set t.id_trabajador = ?1 where t.id_ticket = ?2",
+	@Query(value = "update ticket t set t.id_trabajador=?1 where id_ticket=?2",
 			nativeQuery = true)
-	public void actualizarPorTrabajador(int id_trabajador, int id_ticket);
+	public Ticket actualizarPorTrabajador(int id_trabajador, int id_ticket);
     //public Ticket actualizarPorTrabajador(int id_trabajador, int id_ticket);
 	
 	
