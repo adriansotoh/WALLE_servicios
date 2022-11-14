@@ -101,4 +101,11 @@ public class TicketServiceImp implements TicketService{
 		
 	}
 
+	@Override
+	public void actualizartrabajadores(int idtrabajador, int id) {
+		
+		repository.actualizartrabajadores(idtrabajador, id);
+		
+	}
+
 }
