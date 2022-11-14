@@ -35,9 +35,6 @@ public class TicketServiceImp implements TicketService{
 
 	@Override
 	public Ticket insertaTicket(Ticket obj) {
-		
-		
-		
 		return repository.save(obj);
 	}
 	
@@ -45,7 +42,6 @@ public class TicketServiceImp implements TicketService{
 	public List<Ticket> lista() {
 		System.out.println("si lee--------------");
 		return repository.findAll();
-		
 	}
 
 	@Override
@@ -82,10 +78,8 @@ public class TicketServiceImp implements TicketService{
 	}*/
 
 	@Override
-	public void actualizarTicketPorTrabajador(int trabajador, int id) {
-		System.out.println("si lee actualizaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-		//return repository.actualizarPorTrabajador(trabajador, id);
-		repository.actualizarPorTrabajador(trabajador, id);
+	public Ticket actualizarTicketPorTrabajador(int id_trabajador, int id_ticket) {
+		return repository.actualizarPorTrabajador(id_trabajador, id_ticket);
 	}
 
 	@Override

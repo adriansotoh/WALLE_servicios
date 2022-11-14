@@ -5,6 +5,7 @@ import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -53,18 +54,14 @@ public class TicketController {
                String htmlMsg = "<a href='https://www.whatsapp.com/' ><img src='https://www.openmet.com/wp-content/uploads/2022/04/encuestas-pulso.png'/></a>";
                mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
                //helper.setText(htmlMsg, true); // Use this or above line.
-               helper.setTo("mery.andia.18@gmail.com");
+               helper.setTo("adriansotohidalgo16@gmail.com");
                helper.setSubject("CGDAAAA");
-               helper.setFrom("mery.andia.18@gmail.com");
+               helper.setFrom("adriansotohidalgo16@gmail.com");
                mailSender.send(mimeMessage);
            }catch(Exception ex) {
         	   System.out.println(ex);
-           }
-            
-            
+           }     
     }
-
-	
 	
 	@PostMapping
 	@ResponseBody
@@ -86,7 +83,7 @@ public class TicketController {
 		  
 		obj.setEstrellas(1);
 		obj.setOpinion("");
-		obj.setId_usuario(1);
+		obj.setIdUsuario(1);
 
 		Ticket objSalida = ticketService.insertaTicket(obj);
 		if (objSalida == null) {
@@ -168,40 +165,34 @@ public class TicketController {
 		return ResponseEntity.ok(result);
 	}
 	
+//	@Transactional
 	@PutMapping("/actualizarTrabajador")
 	@ResponseBody
-	public ResponseEntity<?> actualizarTicketPorTrabajador(@PathParam("id_trabajador") int id_trabajador, @PathParam("id_ticket") int id_ticket){
+	public ResponseEntity<Map<String, Object>> actualizarTicketPorTrabajador(
+			@RequestParam(name = "id_trabajador", required = true, defaultValue = "-1" )int id_trabajador,
+			@RequestParam(name = "id_ticket", required = true, defaultValue = "-1" ) int id_ticket){
 		HashMap<String, Object> result = new HashMap<String, Object>();
-		System.out.println("si lee :" + id_trabajador + "/" + id_ticket);
-		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(id_ticket);
+//		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(id_ticket);
 		
-		if(idTicket.isPresent()) {
-			 Integer tckt=1;
-			 ticketService.actualizarTicketPorTrabajador(id_trabajador, id_ticket);
-			if(tckt == null) {
-				result.put("mensaje", "Error al actualizar al encargado");
+//		if(idTicket.isPresent()) {
+//			 ticketService.actualizarTicketPorTrabajador(id_trabajador, id_ticket);
+//			 sendEmail();
+//		} else {
+//			result.put("mensaje", "No existe el ticket " + id_ticket);
+//		}
+		try {
+			Ticket t =  ticketService.actualizarTicketPorTrabajador(id_trabajador, id_ticket);
+			if (t == null) {
+				result.put("mensaje", "Ocurrio un error al actualizar el trabajador");
+				result.put("ticket", t);
+			} else {
+				result.put("mensaje", "Actualizacion de trabajador exitosa");
+				result.put("ticket", null);
 			}
-			else {
-				result.put("mensaje", "Se actualizó al encargado del ticket " + " correctamente");
-			}
-		} else {
-			result.put("mensaje", "No existe el ticket " + id_ticket);
+		} catch(Exception e) {
+			result.put("mensaje", "Ocurrio un error al actualizar el trabajador");
+			result.put("ticket", null);
 		}
-		
-		/*if(idTicket.isPresent()) {
-			 Integer tckt = 1;
-					 ticketService.actualizarTicketPorTrabajador(id_trabajador, id_ticket);
-			if(tckt == null) {
-				result.put("mensaje", "Error al actualizar al encargado");
-			}
-			else {
-				result.put("mensaje", "Se actualizó al encargado del ticket " + " correctamente");
-			}
-		} else {
-			result.put("mensaje", "No existe el ticket " + id_ticket);
-		}*/
-		System.out.println("si leeeeeeeeeeeeeeeee"+ id_trabajador);
-		System.out.println("si leeeeeeeeeeeeeeeee"+ id_ticket);
 		return ResponseEntity.ok(result);
 	}
 
