@@ -18,4 +18,5 @@ public interface TicketService {
 	public abstract Ticket actualizarTicketPorTrabajador(int id_trabajador, int id_ticket);
 	//public Ticket actualizarTicketPorTrabajador(int trabajador, int id);
 	public abstract void actualizarticketOpinionEstrella(int idTicket, int estrella, String opinion);
+	public abstract void actualizartrabajadores(int idtrabajador, int id);
 }

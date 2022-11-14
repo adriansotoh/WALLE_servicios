@@ -44,5 +44,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
 	@Query(value = "update ticket set estrellas = :estrella, opinion = :opinion  where id_ticket = :idTicket",
 			nativeQuery = true)
 	public void actualizarticketOpinionEstrella(int idTicket, int estrella, String opinion);
+	
+	@Modifying
+	@Query(value = "update ticket set id_trabajador = :idtrabajador  where id_ticket = :id",
+			nativeQuery = true)
+	public void actualizartrabajadores(int idtrabajador, int id);
 
 }

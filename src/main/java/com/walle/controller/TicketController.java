@@ -215,5 +215,25 @@ public class TicketController {
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping("actualizarTrabajadores/{id_trabajador}/{idticket}")
+	@ResponseBody
+	@Transactional
+	public ResponseEntity<?> actualizartrabajadores(@PathVariable int id_trabajador, @PathVariable int idticket){
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(idticket);
+		
+		if(idTicket.isPresent()) {
+			ticketService.actualizartrabajadores(id_trabajador, idticket);
+	
+		
+				result.put("mensaje", "Se actualizó el trabajador correctamente");
+			
+		} else {
+			result.put("mensaje", "No existe el ticket " + idticket);
+		}
+		
+		return ResponseEntity.ok(result);
+	}
 
 }
