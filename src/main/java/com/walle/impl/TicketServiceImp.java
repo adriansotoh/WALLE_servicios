@@ -84,7 +84,7 @@ public class TicketServiceImp implements TicketService{
 
 	@Override
 	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador) {
-		return null;
+		return repository.findAllByEstadoIdEstadoIdTrabajador(estado, trabajador);
 	}
 
 	@Override

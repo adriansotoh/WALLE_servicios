@@ -125,6 +125,13 @@ public class TicketController {
 		List<Ticket> lista = ticketService.listaDeTicketPorEstado(estado);
 		return ResponseEntity.ok(lista);
 	}
+	
+	@GetMapping("/listarPorEstadoTrabajador/{estado}/{trabajador}")
+	@ResponseBody
+	public ResponseEntity<List<Ticket>> listaPorEstado(@PathVariable int estado, @PathVariable int trabajador){
+		List<Ticket> lista = ticketService.listaDeTicketPorEstadoNombres(estado, trabajador);
+		return ResponseEntity.ok(lista);
+	}
 
 	
 	@GetMapping("/buscarPorId/{id}")
