@@ -84,7 +84,6 @@ public class TicketServiceImp implements TicketService{
 
 	@Override
 	public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -104,7 +103,6 @@ public class TicketServiceImp implements TicketService{
 
 //	@Override
 //	public Optional<Trabajador> listaDeTicketPorIdTrabajador(int idTrabajador) {
-//		// TODO Auto-generated method stub
 //		return null;
 //	}
 

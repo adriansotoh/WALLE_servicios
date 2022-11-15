@@ -155,6 +155,7 @@ public class TicketController {
 		return ResponseEntity.ok(result);
 	}
 
+
 	@PutMapping("/actualizarEstado/{id_estado}/{id_ticket}")
 	@ResponseBody
 	public ResponseEntity<?> actualizarTicketPorEstado(@PathVariable int id_estado, @PathVariable int id_ticket){
@@ -220,7 +221,8 @@ public class TicketController {
 		return ResponseEntity.ok(result);
 	}
 
-	@GetMapping("actualizarOpinionEstrella/{ticket}/{estrella}/{opinio}")
+	// TODO CMABIAR METODO DE RECEPCION DE PARAMETROS
+	@PostMapping("actualizarOpinionEstrella/{ticket}/{estrella}/{opinio}")
 	@ResponseBody
 	@Transactional
 	public ResponseEntity<?> actualizarticketOpinionEstrella(@PathVariable int ticket, @PathVariable int estrella, @PathVariable String opinio){
@@ -243,7 +245,7 @@ public class TicketController {
 	@GetMapping("actualizarTrabajadores/{id_trabajador}/{idticket}")
 	@ResponseBody
 	@Transactional
-	public ResponseEntity<?> actualizartrabajadores(@PathVariable int id_trabajador, @PathVariable int idticket){
+	public ResponseEntity<?> asignarTicketATrabajador(@PathVariable int id_trabajador, @PathVariable int idticket){
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(idticket);
 		
