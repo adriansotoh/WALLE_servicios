@@ -16,11 +16,16 @@ import java.util.List;
 
 
 public interface TicketRepository extends JpaRepository<Ticket, Integer>{
+	
     public List<Ticket> findAllByTrabajadorNombresContains(@Param("nombre") String nombres);
    
     @Query(value = "select * from ticket t join estado e on t.id_estado = e.id_estado where t.id_estado = ?1",
             nativeQuery = true)
     public List<Ticket> findAllByEstadoIdEstado(int id_estado);
+    
+    @Query(value = "select * from ticket t join estado e on t.id_estado = e.id_estado where t.estado = ?1 and t.id_trabajador = ?2",
+            nativeQuery = true)
+    public List<Ticket> listaDeTicketPorEstadoNombres(int estado, int trabajador);
 
 	@Modifying(clearAutomatically = true)
 	@Transactional
