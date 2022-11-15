@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 
 import com.walle.entity.Ticket;
+import com.walle.entity.Trabajador;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -50,4 +52,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
 			nativeQuery = true)
 	public void actualizartrabajadores(int idtrabajador, int id);
 
+	
+	@Query(value = "select * from trabajador where  id_trabajador = ?idtrabajador",
+			nativeQuery = true)
+	public List<Trabajador> listaDeTicketPorIdTrabajador(int idtrabajador);
 }

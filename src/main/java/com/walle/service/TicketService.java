@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.walle.entity.Ticket;
+import com.walle.entity.Trabajador;
 
 public interface TicketService {
 
@@ -19,4 +20,6 @@ public interface TicketService {
 	//public Ticket actualizarTicketPorTrabajador(int trabajador, int id);
 	public abstract void actualizarticketOpinionEstrella(int idTicket, int estrella, String opinion);
 	public abstract void actualizartrabajadores(int idtrabajador, int id);
+	
+	
 }

@@ -25,8 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.walle.utils.AppSettings;
 import com.walle.entity.Ticket;
+
+import com.walle.entity.Trabajador;
 import com.walle.impl.TrabajadorServiceImp;
 import com.walle.service.TicketService;
+
+import com.walle.service.TrabajadorService;
 
 import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -39,6 +43,9 @@ public class TicketController {
 
 	@Autowired
 	private TicketService ticketService;
+	
+	@Autowired
+	private TrabajadorService TrabajadorService;
 	
 	@Autowired
     private JavaMailSender mailSender;
@@ -232,8 +239,27 @@ public class TicketController {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(idticket);
 		
+		Optional<Trabajador> trabajador = TrabajadorService.buscarId(id_trabajador);
+
 		if(idTicket.isPresent()) {
 			ticketService.actualizartrabajadores(id_trabajador, idticket);
+			
+			//correo
+			
+			 try {
+	        	   MimeMessage mimeMessage = mailSender.createMimeMessage();
+	               MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+//	               String htmlMsg = "<a href='https://www.whatsapp.com/' ><img src='https://www.openmet.com/wp-content/uploads/2022/04/encuestas-pulso.png'/></a>";
+//	               mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
+	               helper.setText("tienes un ticket a cargo"); // Use this or above line.
+	               helper.setTo(trabajador.get().getCorreo());
+	               helper.setSubject("prueba");
+	               helper.setFrom(trabajador.get().getCorreo());
+	               mailSender.send(mimeMessage);
+	           }catch(Exception ex) {
+	        	   System.out.println(ex);
+	           }
+			
 	
 		
 				result.put("mensaje", "Se actualizó el trabajador correctamente");

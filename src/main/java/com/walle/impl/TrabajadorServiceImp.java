@@ -30,5 +30,7 @@ public class TrabajadorServiceImp implements TrabajadorService {
 	public List<Trabajador> listarPorRol(int id) {
 		return repo.listarPorIdRol(id);
 	}
+	
+	
 
 }
