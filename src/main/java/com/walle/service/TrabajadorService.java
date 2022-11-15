@@ -9,4 +9,7 @@ public interface TrabajadorService {
 	public abstract List<Trabajador> listar();
 	public abstract Optional<Trabajador> buscarId(int id);
 	public abstract List<Trabajador> listarPorRol(int id);
+	
+	
+	
 }

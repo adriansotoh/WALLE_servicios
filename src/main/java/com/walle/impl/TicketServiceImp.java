@@ -102,4 +102,12 @@ public class TicketServiceImp implements TicketService{
 		
 	}
 
+//	@Override
+//	public Optional<Trabajador> listaDeTicketPorIdTrabajador(int idTrabajador) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+
+
 }
