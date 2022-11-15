@@ -29,6 +29,9 @@ import com.walle.entity.Ticket;
 
 import com.walle.entity.Trabajador;
 import com.walle.impl.TrabajadorServiceImp;
+import com.walle.entity.Estado;
+import com.walle.impl.EstadoServiceImp;
+import com.walle.impl.TicketServiceImp;
 import com.walle.service.TicketService;
 
 import com.walle.service.TrabajadorService;
@@ -44,7 +47,8 @@ public class TicketController {
 
 	@Autowired
 	private TicketService ticketService;
-	
+	@Autowired
+	private EstadoServiceImp estadoService;
 	@Autowired
 	private TrabajadorService TrabajadorService;
 	
@@ -150,23 +154,37 @@ public class TicketController {
 		
 		return ResponseEntity.ok(result);
 	}
-	
-	@PutMapping("/actualizarEstado")
+
+
+	@PutMapping("/actualizarEstado/{id_estado}/{id_ticket}")
 	@ResponseBody
 	public ResponseEntity<?> actualizarTicketPorEstado(@PathVariable int id_estado, @PathVariable int id_ticket){
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(id_ticket);
+		Optional<Estado> idEstado = estadoService.buscarId(id_estado);
 		
-		if(idTicket.isPresent()) {
-			Ticket tckt = ticketService.actualizarTicketPorEstado(id_estado, id_ticket);
-			if(tckt == null) {
+		if(idTicket.isPresent() && idEstado.isPresent()) {
+			int tckt = ticketService.actualizarTicketPorEstado(id_estado, id_ticket);
+			if(tckt == -1) {
 				result.put("mensaje", "Error al actualizar");
 			}
 			else {
-				result.put("mensaje", "Se actualizó el estado de ticket " + tckt.getIdTicket() + " correctamente");
+				result.put("mensaje", "Se actualizó el estado de ticket " + id_ticket + " correctamente");
+				if(id_estado == 3 || id_estado ==  4) {
+					SimpleMailMessage email = new SimpleMailMessage();
+					email.setTo(idTicket.get().getTrabajador().getCorreo());
+					email.setSubject("Finalización o cancelación de Ticket");
+					email.setText("El ticket procesado ya está terminado o cancelado.");
+					mailSender.send(email);
+				}
 			}
 		} else {
-			result.put("mensaje", "No existe el ticket " + id_ticket);
+			if(idTicket.isEmpty()) {
+				result.put("mensaje", "No existe el ticket " + id_ticket);
+			}
+			else if(idEstado.isEmpty()) {
+				result.put("mensaje", "No existe el estado " + id_estado);
+			}
 		}
 		
 		return ResponseEntity.ok(result);
@@ -203,7 +221,8 @@ public class TicketController {
 		return ResponseEntity.ok(result);
 	}
 
-	@GetMapping("actualizarOpinionEstrella/{ticket}/{estrella}/{opinio}")
+	// TODO CMABIAR METODO DE RECEPCION DE PARAMETROS
+	@PostMapping("actualizarOpinionEstrella/{ticket}/{estrella}/{opinio}")
 	@ResponseBody
 	@Transactional
 	public ResponseEntity<?> actualizarticketOpinionEstrella(@PathVariable int ticket, @PathVariable int estrella, @PathVariable String opinio){
@@ -226,7 +245,7 @@ public class TicketController {
 	@GetMapping("actualizarTrabajadores/{id_trabajador}/{idticket}")
 	@ResponseBody
 	@Transactional
-	public ResponseEntity<?> actualizartrabajadores(@PathVariable int id_trabajador, @PathVariable int idticket){
+	public ResponseEntity<?> asignarTicketATrabajador(@PathVariable int id_trabajador, @PathVariable int idticket){
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(idticket);
 		

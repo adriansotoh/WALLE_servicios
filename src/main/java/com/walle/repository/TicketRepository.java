@@ -8,6 +8,8 @@ import com.walle.entity.Trabajador;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
@@ -20,9 +22,11 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
             nativeQuery = true)
     public List<Ticket> findAllByEstadoIdEstado(int id_estado);
 
+	@Modifying(clearAutomatically = true)
+	@Transactional
 	@Query(value = "update ticket set id_estado = ?1 where id_ticket = ?2",
 			nativeQuery = true)
-	public Ticket actualizarPorEstado(int id_estado, int id_ticket);
+	public int actualizarPorEstado(int id_estado, int id_ticket);
 	
     @Modifying
 	@Query(value = "update ticket t set t.id_trabajador=?1 where id_ticket=?2",
@@ -46,7 +50,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
 	@Query(value = "update ticket set estrellas = :estrella, opinion = :opinion  where id_ticket = :idTicket",
 			nativeQuery = true)
 	public void actualizarticketOpinionEstrella(int idTicket, int estrella, String opinion);
-	
+
+
 	@Modifying
 	@Query(value = "update ticket set id_trabajador = :idtrabajador  where id_ticket = :id",
 			nativeQuery = true)
