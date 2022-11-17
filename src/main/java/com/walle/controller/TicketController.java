@@ -304,5 +304,20 @@ public class TicketController {
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	
+	@DeleteMapping("/eliminaTicket/{id}")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> eliminaDocente(@PathVariable("id") int idTicket) {
+		Map<String, Object> salida = new HashMap<>();
+		try {
+			ticketService.eliminaTicket(idTicket);
+			salida.put("mensaje", "Se elimino el ticket");
+		} catch (Exception e) {
+			e.printStackTrace();
+			salida.put("mensaje", "No se pudo eliminar el ticket");
+		}
+		return ResponseEntity.ok(salida);
+	}
 
 }
