@@ -21,5 +21,7 @@ public interface TicketService {
 	public abstract void actualizarticketOpinionEstrella(int idTicket, int estrella, String opinion);
 	public abstract void actualizartrabajadores(int idtrabajador, int id);
 	
+	public abstract void eliminaTicket(int idTicket);
+	
 	
 }

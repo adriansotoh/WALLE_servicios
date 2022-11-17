@@ -101,6 +101,12 @@ public class TicketServiceImp implements TicketService{
 		
 	}
 
+	@Override
+	public void eliminaTicket(int idTicket) {
+		repository.deleteById(idTicket);
+		
+	}
+
 //	@Override
 //	public Optional<Trabajador> listaDeTicketPorIdTrabajador(int idTrabajador) {
 //		return null;
