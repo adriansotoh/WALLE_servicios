@@ -100,6 +100,23 @@ public class TicketController {
 		if (objSalida == null) {
 			lstMensajes.add("Error en el registro");
 		}else {
+			
+			 try {
+	        	   MimeMessage mimeMessage = mailSender.createMimeMessage();
+	               MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+	               String parte1 = objSalida.getIdTicket() + " '>aqui</a> </p>";
+	               String prueba = "<p>Se ha registrado un ticket, Puede dar seguimiento a su ticket dando click <a href='http://localhost:4200/detalleTicket/" + parte1;
+	               String htmlMsg = prueba;
+	               mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
+//	               helper.setText("Su ticket se ha registrado "); // Use this or above line.
+	               helper.setTo(obj.getCorreo_cliente());
+	               helper.setSubject("Ticket Registrado");
+	               helper.setFrom(obj.getCorreo_cliente());
+	               mailSender.send(mimeMessage);
+	           }catch(Exception ex) {
+	        	   System.out.println(ex);
+	           }
+			
 			lstMensajes.add("Se registró el ticket con el ID ==> " + objSalida.getIdTicket());
 		}
 		return ResponseEntity.ok(salida);
