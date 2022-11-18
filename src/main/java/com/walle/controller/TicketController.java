@@ -95,6 +95,7 @@ public class TicketController {
 		obj.setEstrellas(1);
 		obj.setOpinion("");
 		obj.setIdUsuario(1);
+		obj.setIdTrabajador(6);
 
 		Ticket objSalida = ticketService.insertaTicket(obj);
 		if (objSalida == null) {
@@ -193,14 +194,48 @@ public class TicketController {
 				result.put("mensaje", "Error al actualizar");
 			}
 			else {
-				result.put("mensaje", "Se actualizó el estado de ticket " + id_ticket + " correctamente");
-				if(id_estado == 3 || id_estado ==  4) {
-					SimpleMailMessage email = new SimpleMailMessage();
-					email.setTo(idTicket.get().getTrabajador().getCorreo());
-					email.setSubject("Finalización o cancelación de Ticket");
-					email.setText("El ticket procesado ya está terminado o cancelado.");
-					mailSender.send(email);
+			
+				if(id_estado == 3 ) {
+					
+					 try {
+			        	   MimeMessage mimeMessage = mailSender.createMimeMessage();
+			               MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+	
+			               String prueba = "<p>Se ha registrado un ticket, Puede dar seguimiento a su ticket dando click <a href='http://localhost:4200/feedback?id=" + idTicket.get().getIdTicket() + "'" ;
+			               String htmlMsg = prueba;
+			               mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
+//			               helper.setText("Su ticket se ha registrado "); // Use this or above line.
+			               helper.setTo(idTicket.get().getCorreo_cliente());
+			               helper.setSubject("Su ticket ha sido finalizado");
+			               helper.setFrom(idTicket.get().getCorreo_cliente() );
+			               mailSender.send(mimeMessage);
+			           }catch(Exception ex) {
+			        	   System.out.println(ex);
+			           }
+					
+					
+				
+				}else if(id_estado == 4) {
+					
+					 try {
+			        	   MimeMessage mimeMessage = mailSender.createMimeMessage();
+			               MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+	
+			               String prueba = "<p>Se ha cancelado su ticket";
+			               String htmlMsg = prueba;
+			               mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
+//			               helper.setText("Su ticket se ha registrado "); // Use this or above line.
+			               helper.setTo(idTicket.get().getCorreo_cliente());
+			               helper.setSubject("Su ticket ha sido cancelado");
+			               helper.setFrom(idTicket.get().getCorreo_cliente() );
+			               mailSender.send(mimeMessage);
+			           }catch(Exception ex) {
+			        	   System.out.println(ex);
+			           }
+					
+
 				}
+				result.put("mensaje", "Se actualizó el estado de ticket " + id_ticket + " correctamente");
 			}
 		} else {
 			if(idTicket.isEmpty()) {
