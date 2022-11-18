@@ -13,6 +13,7 @@ import javax.websocket.server.PathParam;
 
 import com.walle.impl.TicketServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -246,10 +247,13 @@ public class TicketController {
 	}
 
 	// TODO CMABIAR METODO DE RECEPCION DE PARAMETROS
-	@PostMapping("actualizarOpinionEstrella/{ticket}/{estrella}/{opinio}")
+	@PostMapping("actualizarOpinionEstrella")
 	@ResponseBody
 	@Transactional
-	public ResponseEntity<?> actualizarticketOpinionEstrella(@PathVariable int ticket, @PathVariable int estrella, @PathVariable String opinio){
+	public ResponseEntity<?> actualizarticketOpinionEstrella(
+			@RequestParam(name = "id") int ticket,
+			@RequestParam(name = "star") int estrella,
+			@RequestParam(name = "opinion") String opinio){
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		Optional<Ticket> idTicket = ticketService.listaDeTicketPorId(ticket);
 		
