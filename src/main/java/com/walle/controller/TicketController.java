@@ -57,23 +57,23 @@ public class TicketController {
     private JavaMailSender mailSender;
 	
 	
-	@GetMapping("/enviaremail")
-	public void sendEmail() {
-	
-           try {
-        	   MimeMessage mimeMessage = mailSender.createMimeMessage();
-               MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-               String htmlMsg = "<a href='https://www.whatsapp.com/' ><img src='https://www.openmet.com/wp-content/uploads/2022/04/encuestas-pulso.png'/></a>";
-               mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
-               //helper.setText(htmlMsg, true); // Use this or above line.
-               helper.setTo("adriansotohidalgo16@gmail.com");
-               helper.setSubject("CGDAAAA");
-               helper.setFrom("adriansotohidalgo16@gmail.com");
-               mailSender.send(mimeMessage);
-           }catch(Exception ex) {
-        	   System.out.println(ex);
-           }     
-    }
+//	@GetMapping("/enviaremail")
+//	public void sendEmail() {
+//	
+//           try {
+//        	   MimeMessage mimeMessage = mailSender.createMimeMessage();
+//               MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+//               String htmlMsg = "<a href='https://www.whatsapp.com/' ><img src='https://www.openmet.com/wp-content/uploads/2022/04/encuestas-pulso.png'/></a>";
+//               mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
+//               //helper.setText(htmlMsg, true); // Use this or above line.
+//               helper.setTo("adriansotohidalgo16@gmail.com");
+//               helper.setSubject("CGDAAAA");
+//               helper.setFrom("adriansotohidalgo16@gmail.com");
+//               mailSender.send(mimeMessage);
+//           }catch(Exception ex) {
+//        	   System.out.println(ex);
+//           }     
+//    }
 	
 	@PostMapping
 	@ResponseBody
@@ -93,7 +93,7 @@ public class TicketController {
 			return ResponseEntity.ok(salida);
 		}
 		  
-		obj.setEstrellas(1);
+		obj.setEstrellas(0);
 		obj.setOpinion("");
 		obj.setIdUsuario(1);
 		obj.setIdTrabajador(6);
@@ -107,7 +107,7 @@ public class TicketController {
 	        	   MimeMessage mimeMessage = mailSender.createMimeMessage();
 	               MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 	               String parte1 = objSalida.getIdTicket() + " '>aqui</a> </p>";
-	               String prueba = "<p>Se ha registrado un ticket, Puede dar seguimiento a su ticket dando click <a href='http://localhost:4200/detalleTicket/" + parte1;
+	               String prueba = "<p>Se ha registrado un ticket, Puede dar seguimiento a su ticket dando click <a href='http://localhost:4200/detalleTicket/" + parte1  ;
 	               String htmlMsg = prueba;
 	               mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
 //	               helper.setText("Su ticket se ha registrado "); // Use this or above line.
@@ -202,7 +202,10 @@ public class TicketController {
 			        	   MimeMessage mimeMessage = mailSender.createMimeMessage();
 			               MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 	
-			               String prueba = "<p>Se ha registrado un ticket, Puede dar seguimiento a su ticket dando click <a href='http://localhost:4200/feedback?id=" + idTicket.get().getIdTicket() + "'" ;
+			               String prueba = "<p>Se ha concluido su ticket, Puede dar su opinión respecto a la atencion recibida dando click a la imagen</p>"
+			               		+ "<a href='http://localhost:4200/feedback?id=" + idTicket.get().getIdTicket() + "'><img src='https://www.openmet.com/wp-content/uploads/2022/04/encuestas-pulso.png'/></a>"
+			               				+ "<p>Atte. Servide Desk Walle</p>"
+			               		;
 			               String htmlMsg = prueba;
 			               mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
 //			               helper.setText("Su ticket se ha registrado "); // Use this or above line.

@@ -66,6 +66,7 @@ public class Ticket {
 	private Integer estrellas; 	
 	private String opinion; 
 	private String correo_cliente;
+	private String fecha_creacion;
 
 }
 
