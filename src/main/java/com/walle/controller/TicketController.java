@@ -329,7 +329,7 @@ public class TicketController {
 //	               mimeMessage.setContent(htmlMsg, "text/html"); /** Use this or below line **/
 	               helper.setText("tienes un ticket a cargo"); // Use this or above line.
 	               helper.setTo(trabajador.get().getCorreo());
-	               helper.setSubject("prueba");
+	               helper.setSubject("Ticket a cargo");
 	               helper.setFrom(trabajador.get().getCorreo());
 	               mailSender.send(mimeMessage);
 	           }catch(Exception ex) {

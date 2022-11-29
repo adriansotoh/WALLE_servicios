@@ -15,11 +15,13 @@ import com.walle.entity.Dificultad;
 import com.walle.entity.Estado;
 import com.walle.entity.Urgencia;
 import com.walle.entity.Trabajador;
+import com.walle.entity.Rol;
 
 import com.walle.service.DificultadService;
 import com.walle.service.EstadoService;
 import com.walle.service.UrgenciaService;
 import com.walle.service.TrabajadorService;
+import com.walle.service.RolService;
 import com.walle.utils.AppSettings;
 
 
@@ -42,6 +44,8 @@ public class UtilController {
 	@Autowired
 	private UrgenciaService urgenciaService;
 	
+	@Autowired
+	private RolService rolService;
 	
 	
 	@GetMapping("/listaTrabajador")
@@ -70,5 +74,11 @@ public class UtilController {
 				
 	}
 	
+	@GetMapping("/listaRol")
+	@ResponseBody
+	public List<Rol> listaRol() {
+		return rolService.listar();
+				
+	}
 	
 }
