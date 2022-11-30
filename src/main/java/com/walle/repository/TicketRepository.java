@@ -1,5 +1,6 @@
 package com.walle.repository;
 
+import com.walle.dto.GeneralStarsDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 
@@ -66,4 +67,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
 	@Query(value = "select * from trabajador where  id_trabajador = ?idtrabajador",
 			nativeQuery = true)
 	public List<Trabajador> listaDeTicketPorIdTrabajador(int idtrabajador);
+
+
+	@Query(value = "select count(*) as cantidad, t.nombres, estrellas from ticket inner join trabajador as t where t.id_trabajador = ticket.id_trabajador group by estrellas, t.id_trabajador, t.nombres;",
+	nativeQuery = true)
+	public List<GeneralStarsDto> getGeneralStarDashboard();
 }
