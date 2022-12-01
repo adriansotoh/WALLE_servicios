@@ -1,5 +1,7 @@
 package com.walle.repository;
 
+import com.walle.dto.ByMonthDashboardDto;
+import com.walle.dto.DashboardDto;
 import com.walle.dto.GeneralStarsDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -72,4 +74,12 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
 	@Query(value = "select count(*) as cantidad, t.nombres, estrellas from ticket inner join trabajador as t where t.id_trabajador = ticket.id_trabajador group by estrellas, t.id_trabajador, t.nombres;",
 	nativeQuery = true)
 	public List<GeneralStarsDto> getGeneralStarDashboard();
+
+	@Query(value = "select count(*) tickets, nombres from ticket t inner join trabajador tr on t.id_trabajador = tr.id_trabajador where t.fecha_creacion BETWEEN ?1 and ?2 group by t.id_trabajador, nombres;"
+			, nativeQuery = true)
+	public List<ByMonthDashboardDto> getByMonthDashboard(String startDate, String endDate);
+
+	@Query(value = "select count(*) total,  count(if(ticket.id_estado = 1,id_estado, NULL)) noiniciado, count(if(id_estado=2,id_estado,null)) enproceso, count(if(ticket.id_estado = 3, id_estado, NULL)) finalizado  \n" +
+			",count(if(ticket.id_estado = 4, id_estado, NULL)) cancelado from ticket;", nativeQuery = true)
+	public DashboardDto getDashboard();
 }
