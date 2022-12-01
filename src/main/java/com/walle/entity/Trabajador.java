@@ -35,6 +35,7 @@ public class Trabajador {
 
 	private String descripcion;
 	private String usuario;
+	private String password;
 
 }
 
