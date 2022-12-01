@@ -33,4 +33,18 @@ public class TrabajadorServiceImp implements TrabajadorService {
 	
 	
 
+	@Override
+	public Trabajador actualizaRegistraTrabajador(Trabajador trabajador) {
+
+		return repo.save(trabajador);
+	}
+
+	@Override
+	public List<Trabajador> listarPorGmail(String gmail) {
+		// TODO Auto-generated method stub
+		return repo.listarPorGmail(gmail);
+	}
+	
+	
+
 }
